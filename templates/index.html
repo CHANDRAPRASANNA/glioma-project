@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron p-5 rounded-3" style="background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%); color: white;">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold">Advanced Glioma Prognosis System</h1>
+        <p class="lead">AI-powered survival prediction and risk stratification using multi-modal clinical and imaging data.</p>
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.3);">
+        <p>Integrates Voting Classifiers (LR, RF, SVM, XGBoost) and Deep Learning (CNN) for state-of-the-art accuracy.</p>
+        {% if current_user.is_authenticated %}
+            <a class="btn btn-light btn-lg text-primary fw-bold" href="{{ url_for('main.predict') }}" role="button">Start Prediction <i class="fas fa-arrow-right ms-2"></i></a>
+        {% else %}
+            <a class="btn btn-warning btn-lg fw-bold" href="{{ url_for('auth.register') }}" role="button">Get Started</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Multi-Modal AI</h5>
+                <p class="card-text">Combines clinical biomarkers, genetic data, and MRI scans for holistic analysis.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                <h5 class="card-title">High Accuracy</h5>
+                <p class="card-text">Utilizes an ensemble Voting Classifier to achieve robust and reliable predictions.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 text-center p-4">
+            <div class="card-body">
+                <i class="fas fa-search-plus fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Explainable AI</h5>
+                <p class="card-text">Transparency through SHAP and LIME visualizations to support clinical decisions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

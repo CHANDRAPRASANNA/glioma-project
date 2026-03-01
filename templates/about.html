@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 offset-lg-2">
+        <h2 class="mb-4">About the Project</h2>
+        <p class="lead">This AI-Based Glioma Prognosis System allows for non-invasive, accurate, and explainable risk
+            stratification of brain tumors.</p>
+
+        <h4 class="mt-4">Technical Architecture</h4>
+        <ul>
+            <li><strong>Backend:</strong> Python, Flask, SQLite</li>
+            <li><strong>Machine Learning:</strong> Scikit-learn (Voting Classifier: LR, RF, SVM, XGBoost)</li>
+            <li><strong>Deep Learning:</strong> TensorFlow/Keras (CNN for MRI analysis)</li>
+            <li><strong>Explainability (XAI):</strong> SHAP (Global/Local importance), LIME</li>
+        </ul>
+
+        <h4 class="mt-4">Clinical Relevance</h4>
+        <p>Gliomas are the most common primary brain tumors. Accurate prognosis is critical for treatment planning. This
+            system integrates multiple data modalities to provide a comprehensive risk assessment score, aiding
+            clinicians in decision-making.</p>
+
+        <div class="alert alert-warning mt-4">
+            <i class="fas fa-exclamation-triangle me-2"></i><strong>Disclaimer:</strong> This tool is for educational
+            and research purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment.
+        </div>
+    </div>
+</div>
+{% endblock %}

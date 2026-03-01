@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-user-md me-2"></i>New Patient Analysis</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" enctype="multipart/form-data">
+                    <h5 class="mb-3 text-secondary border-bottom pb-2">Clinical Data</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="age" class="form-label">Patient Age</label>
+                            <input type="number" class="form-control" id="age" name="age" min="0" max="120" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Select...</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="symptoms" class="form-label">Presenting Symptoms</label>
+                            <textarea class="form-control" id="symptoms" name="symptoms" rows="2"
+                                placeholder="e.g. Headache, Seizures..."></textarea>
+                        </div>
+                    </div>
+
+                    <h5 class="mb-3 text-secondary border-bottom pb-2">Tumor & Genetic Markers</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="tumor_grade" class="form-label">Tumor Grade (WHO)</label>
+                            <select class="form-select" id="tumor_grade" name="tumor_grade" required>
+                                <option value="Grade II">Grade II</option>
+                                <option value="Grade III">Grade III</option>
+                                <option value="Grade IV">Grade IV (Glioblastoma)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">IDH Mutation Status</label>
+                            <select class="form-select" name="idh_mutation" required>
+                                <option value="0">Wildtype</option>
+                                <option value="1">Mutant</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">MGMT Methylation</label>
+                            <select class="form-select" name="mgmt_methylation" required>
+                                <option value="0">Unmethylated</option>
+                                <option value="1">Methylated</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">1p/19q Codeletion</label>
+                            <select class="form-select" name="codeletion_1p19q" required>
+                                <option value="0">Non-codel</option>
+                                <option value="1">Codel</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h5 class="mb-3 text-secondary border-bottom pb-2">Neuroimaging</h5>
+                    <div class="mb-4">
+                        <label for="mri_scan" class="form-label">Upload MRI Scan (DICOM/JPG/PNG)</label>
+                        <input class="form-control" type="file" id="mri_scan" name="mri_scan" accept=".jpg,.png,.jpeg">
+                        <div class="form-text">Supported formats: JPG, PNG. Max size 16MB.</div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Run Prognosis Analysis</button>
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

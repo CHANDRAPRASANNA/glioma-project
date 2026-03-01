@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>Patient Dashboard</h2>
+        <p class="text-muted">Welcome back, {{ current_user.username }}</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{{ url_for('main.predict') }}" class="btn btn-primary"><i class="fas fa-plus me-2"></i>New
+            Prediction</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if patients %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Tumor Grade</th>
+                        <th>Prediction</th>
+                        <th>Confidence</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td>#{{ patient.id }}</td>
+                        <td>{{ patient.timestamp.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ patient.gender }}</td>
+                        <td>{{ patient.age }}</td>
+                        <td>{{ patient.tumor_grade }}</td>
+                        <td>
+                            <span
+                                class="badge bg-{{ 'danger' if patient.prediction_result == 'High Risk' else 'success' }}">
+                                {{ patient.prediction_result }}
+                            </span>
+                        </td>
+                        <td>{{ patient.prediction_confidence }}%</td>
+                        <td>
+                            <a href="{{ url_for('main.result', patient_id=patient.id) }}"
+                                class="btn btn-sm btn-outline-info">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+            <p>No patient records found. Start by making a new prediction.</p>
+            <a href="{{ url_for('main.predict') }}" class="btn btn-primary mt-2">New Analysis</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

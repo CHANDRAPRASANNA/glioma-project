@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- Main Result Card -->
+    <div class="col-md-12 mb-4">
+        <div class="card text-center border-{{ 'danger' if patient.prediction_result == 'High Risk' else 'success' }}">
+            <div
+                class="card-header bg-{{ 'danger' if patient.prediction_result == 'High Risk' else 'success' }} text-white">
+                <h3 class="mb-0">Prognosis Result</h3>
+            </div>
+            <div class="card-body">
+                <h1
+                    class="display-4 {{ 'text-danger' if patient.prediction_result == 'High Risk' else 'text-success' }}">
+                    {{ patient.prediction_result }}
+                </h1>
+                <p class="lead">Confidence Score: <strong>{{ patient.prediction_confidence }}%</strong></p>
+
+                <div class="alert alert-light border mt-3 d-inline-block text-start">
+                    <h5>Summary:</h5>
+                    <ul class="mb-0">
+                        <li><strong>Patient Age:</strong> {{ patient.age }}</li>
+                        <li><strong>Tumor Grade:</strong> {{ patient.tumor_grade }}</li>
+                        <li><strong>IDH Mutation:</strong> {{ 'Mutant' if patient.idh_mutation else 'Wildtype' }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explainability Dashboard (XAI) -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-bar me-2"></i>Feature Importance (SHAP)</h5>
+            </div>
+            <div class="card-body text-center">
+                {% if patient.shap_plot %}
+                <img src="data:image/png;base64,{{ patient.shap_plot }}" class="img-fluid" alt="SHAP Analysis">
+                {% else %}
+                <div class="text-muted py-5">
+                    <i class="fas fa-chart-area fa-4x mb-3"></i>
+                    <p>Analysis not available</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5><i class="fas fa-search me-2"></i>Local Explanation (LIME)</h5>
+            </div>
+            <div class="card-body text-center">
+                {% if patient.lime_plot %}
+                <img src="data:image/png;base64,{{ patient.lime_plot }}" class="img-fluid" alt="LIME Explanation">
+                {% else %}
+                <div class="text-muted py-5">
+                    <i class="fas fa-project-diagram fa-4x mb-3"></i>
+                    <p>Explanation not available</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Pearson Correlation Matrix -->
+    <div class="col-md-12 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5><i class="fas fa-th me-2"></i>Pearson Correlation Matrix</h5>
+            </div>
+            <div class="card-body text-center">
+                {% if corr_plot %}
+                <img src="data:image/png;base64,{{ corr_plot }}" class="img-fluid" alt="Pearson Correlation Matrix">
+                {% else %}
+                <div class="text-muted py-5">
+                    <i class="fas fa-th-large fa-4x mb-3"></i>
+                    <p>Matrix not available</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- CNN Accuracy Curve -->
+    <div class="col-md-12 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-line me-2"></i>CNN Training Accuracy Curve</h5>
+            </div>
+            <div class="card-body text-center">
+                {% if cnn_acc_plot %}
+                <img src="data:image/png;base64,{{ cnn_acc_plot }}" class="img-fluid" alt="CNN Accuracy Curve">
+                {% else %}
+                <div class="text-muted py-5">
+                    <i class="fas fa-chart-line fa-4x mb-3"></i>
+                    <p>Accuracy curve not available</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mb-5">
+    <a href="{{ url_for('main.predict') }}" class="btn btn-primary btn-lg me-2">New Prediction</a>
+    <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary btn-lg">Back to Dashboard</a>
+</div>
+{% endblock %}
